@@ -85,6 +85,7 @@ ELSE()
 ENDIF()
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Emscripten")
+  add_link_options(-sASYNCIFY)
   # Use Emcurses instead of regular curses
   find_library(EMCURSES_LIBRARIES emcurses)
   IF (NOT EMCURSES_LIBRARIES)

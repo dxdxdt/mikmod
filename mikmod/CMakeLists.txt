@@ -86,6 +86,7 @@ ENDIF()
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Emscripten")
   add_link_options(-sASYNCIFY)
+
   # Use Emcurses instead of regular curses
   find_library(EMCURSES_LIBRARIES emcurses)
   IF (NOT EMCURSES_LIBRARIES)
@@ -94,6 +95,17 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Emscripten")
       MESSAGE(STATUS "Found emcurses: ${EMCURSES_LIBRARIES}")
   ENDIF()
   LIST(APPEND EXTRA_LIBS ${EMCURSES_LIBRARIES})
+
+  # Copy some skeleton files
+  CONFIGURE_FILE(
+    "${PROJECT_SOURCE_DIR}/em/mikmod.html"
+    "${PROJECT_BINARY_DIR}/src/mikmod.html"
+    COPYONLY)
+  get_filename_component(EMCURSES_LIBDIR ${EMCURSES_LIBRARIES} DIRECTORY)
+  CONFIGURE_FILE(
+    "${EMCURSES_LIBDIR}/emcurses/termlib.js"
+    "${PROJECT_BINARY_DIR}/src/termlib.js"
+    COPYONLY)
 ELSEIF(UNIX OR APPLE)
   INCLUDE(FindCurses)
   IF(NOT CURSES_FOUND)

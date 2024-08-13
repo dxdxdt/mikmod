@@ -39,7 +39,7 @@ int usleep_new(unsigned long);
 
 #if defined(__OS2__)||defined(__EMX__)
 #define SLEEP(n)  DosSleep(n)
-#elif __EMSCRIPTEN__
+#elif defined(__EMSCRIPTEN__)
 #include <emscripten.h>
 #define SLEEP(n) emscripten_sleep(n)
 #elif defined(_WIN32)
